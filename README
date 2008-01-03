@@ -1,0 +1,21 @@
+= find_conditions_with_aggregation
+
+This plugin adds support to ActiveRecord for a value object to be used in a finder conditions hash when the attribute key corresponds to a composed_of relationship on the target model. I've tested it explicitly for the following types of model calls:
+
+  Model.find(:first, :conditions => { :address => Address.new("123 Abc St.", "chicago") }
+  Model.find(:all, :conditions => { :address => Address.new("123 Abc St.", "chicago") }
+  Model.find_by_address(Address.new("123 Abc St.", "chicago"))
+  Model.find_all_by_address(Address.new("123 Abc St.", "chicago"))
+  Model.exists?(:address => Address.new("123 Abc St.", "chicago"))
+
+It should also work for delete_all and destroy_all, since they reuse the same logic as the above.
+
+== Resources
+
+Install
+
+* script/plugin install http://svn.ryankinderman.net/find_conditions_with_aggregation
+
+Subversion
+
+* http://svn.ryankinderman.net/find_conditions_with_aggregation

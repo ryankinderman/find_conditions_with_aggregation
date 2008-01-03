@@ -1,0 +1,18 @@
+sqlite:
+  :adapter: sqlite
+  :dbfile: find_conditions_with_aggregation_plugin.sqlite.db
+sqlite3:
+  :adapter: sqlite3
+  :dbfile: find_conditions_with_aggregation_plugin.sqlite3.db
+postgresql:
+  :adapter: postgresql
+  :username: postgres
+  :password: postgres
+  :database: find_conditions_with_aggregation_plugin_test
+  :min_messages: ERROR
+mysql:
+  :adapter: mysql
+  :host: localhost
+  :username: rails
+  :password:
+  :database: find_conditions_with_aggregation_plugin_test
