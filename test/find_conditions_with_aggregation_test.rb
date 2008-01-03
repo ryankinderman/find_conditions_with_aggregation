@@ -19,13 +19,22 @@ class FindConditionsWithAggregationTest < Test::Unit::TestCase
       Address.new(existing_address.street + "1", existing_address.city, existing_address.country))
   end
 
-  # def test_find_on_hash_conditions_with_explicit_table_name_and_aggregate
-  #   david = customers(:david)
-  #   assert Customer.find(david.id, :conditions => { 'customers.name' => david.name, :address => david.address })
-  #   assert_raises(ActiveRecord::RecordNotFound) { 
-  #     Customer.find(david.id, :conditions => { 'customers.name' => david.name + "1", :address => david.address }) 
-  #   }
-  # end
+  def test_find_on_hash_conditions_with_explicit_table_name_and_aggregate
+    david = customers(:david)
+    begin
+      assert Customer.find(david.id, :conditions => { 'customers.name' => david.name, :address => david.address })
+      assert_raises(ActiveRecord::RecordNotFound) { 
+        Customer.find(david.id, :conditions => { 'customers.name' => david.name + "1", :address => david.address }) 
+      }
+    rescue ActiveRecord::StatementInvalid => e
+      raise StandardError, 
+        "This test is expected to fail on Rails revisions earlier than 7943 because the " + \
+        "feature being tested was not present prior to that revision.\n\n" + \
+        "Details:\n" + \
+        "#{e.class.name}: #{e.message}\n\n" + \
+        e.backtrace.join("\n")
+    end
+  end
 
   def test_hash_condition_find_with_aggregate_having_one_mapping
     balance = customers(:david).balance
